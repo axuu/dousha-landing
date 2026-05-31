@@ -105,10 +105,10 @@ export const t: Record<Lang, Strings> = {
     htmlLang: 'zh-CN',
     dir: 'ltr',
     meta: {
-      title: '豆沙 Dousha · macOS 菜单栏语音听写,不用装豆包输入法',
+      title: '豆沙 Dousha · macOS 菜单栏语音听写，不用装豆包输入法',
       description:
-        'Dousha(豆沙)是一个 macOS 菜单栏小工具:按住一个键说话,松手就把豆包语音识别转写的文字粘贴到当前应用。免费开源,支持 macOS 14+,无需安装整套豆包输入法。',
-      ogAlt: '豆沙 Dousha 的 app 图标:一颗咧嘴笑的豆沙红豆子,从奶油色的包子皮里探出头。',
+        'Dousha（豆沙）是一个 macOS 菜单栏小工具：按住一个键说话，松手就把豆包语音识别转写的文字粘贴到当前应用。免费开源，支持 macOS 14+，无需安装整套豆包输入法。',
+      ogAlt: '豆沙 Dousha 的 app 图标：一颗咧嘴笑的豆沙红豆子，从奶油色的包子皮里探出头。',
     },
     nav: {
       links: [
@@ -124,12 +124,12 @@ export const t: Record<Lang, Strings> = {
     },
     hero: {
       eyebrow: 'macOS 菜单栏语音听写',
-      titleLines: ['按住、说话、松手,', '文字就落进光标里。'],
+      titleLines: ['按住、说话、松手，', '文字就落进光标里。'],
       subtitle:
-        'Dousha(豆沙)把豆包的语音听写单独剥出来,常驻菜单栏。不用装整套豆包输入法,按住一个键说话,转写好的文字直接粘贴到你正在打字的地方。',
+        'Dousha（豆沙）把豆包的语音听写单独剥出来，常驻菜单栏。不用装整套豆包输入法，按住一个键说话，转写好的文字直接粘贴到你正在打字的地方。',
       primaryCta: '用 Homebrew 安装',
       secondaryCta: '下载 DMG',
-      brewLabel: '最省事的装法:',
+      brewLabel: '最省事的装法：',
       chips: ['免费开源 · MIT', 'macOS 14+', '无需豆包输入法'],
       iconAlt: '豆沙的笑脸豆子图标',
       demo: {
@@ -137,13 +137,13 @@ export const t: Record<Lang, Strings> = {
         keycap: '右 Shift',
         listening: '正在听…',
         transcript: '帮我把这段话直接转成文字',
-        caption: '松手的瞬间,文字就粘好了。',
+        caption: '松手的瞬间，文字就粘好了。',
       },
     },
     concept: {
       eyebrow: '名字就是说明书',
-      title: '豆包减去外壳,剩下的那口馅。',
-      body: '豆包(Doubao)是带壳的包子:一整套输入法,连着它的界面和习惯一起装进系统。你真正想要的,其实只是里面那口语音识别。豆沙(Dousha)把馅留下、把皮扔掉:同一套识别能力,变成一个安静待在菜单栏的小工具。',
+      title: '豆包减去外壳，剩下的那口馅。',
+      body: '豆包（Doubao）是带壳的包子：一整套输入法，连着它的界面和习惯一起装进系统。你真正想要的，其实只是里面那口语音识别。豆沙（Dousha）把馅留下、把皮扔掉：同一套识别能力，变成一个安静待在菜单栏的小工具。',
       bun: '豆包',
       minus: '减去外壳',
       filling: '豆沙',
@@ -152,22 +152,22 @@ export const t: Record<Lang, Strings> = {
     },
     how: {
       eyebrow: '怎么用',
-      title: '三步,没有第四步。',
+      title: '三步，没有第四步。',
       steps: [
         {
           k: '01',
           title: '按住',
-          body: '默认热键是右 Shift。不顺手?在设置里换成任何一个键。',
+          body: '默认热键是右 Shift。不顺手？在设置里换成任何一个键。',
         },
         {
           k: '02',
           title: '说话',
-          body: '对着麦克风说你想打的字,屏幕上的波形会提示它正在听。',
+          body: '对着麦克风说你想打的字，屏幕上的波形会提示它正在听。',
         },
         {
           k: '03',
           title: '松手',
-          body: '松开键,转写好的文字立刻粘到当前光标处,和你手打的一样。',
+          body: '松开键，转写好的文字立刻粘到当前光标处，和你手打的一样。',
         },
       ],
     },
@@ -175,21 +175,21 @@ export const t: Record<Lang, Strings> = {
       eyebrow: '功能',
       title: '可以按你的习惯调。',
       items: [
-        { title: '自定义热键', body: '右 Shift 不顺手?任何键都能设成触发键。' },
+        { title: '自定义热键', body: '右 Shift 不顺手？任何键都能设成触发键。' },
         {
           title: '按住 / 切换两种模式',
-          body: '短句用按住;长段用切换:按一下开始,再按一下结束。',
+          body: '短句用按住；长段用切换：按一下开始，再按一下结束。',
         },
-        { title: '多语言识别', body: '中文、英文等多种语言,在设置里随时切换。' },
-        { title: '多识别引擎', body: '可选不同的语音识别引擎,挑准确度和速度都合适的那个。' },
-        { title: '菜单栏常驻', body: '不抢 Dock、不占窗口,要用的时候它就在最上面。' },
-        { title: '不碰你的输入法', body: '不替换系统输入法,不改你原来的打字习惯。' },
+        { title: '多语言识别', body: '中文、英文等多种语言，在设置里随时切换。' },
+        { title: '多识别引擎', body: '可选不同的语音识别引擎，挑准确度和速度都合适的那个。' },
+        { title: '菜单栏常驻', body: '不抢 Dock、不占窗口，要用的时候它就在最上面。' },
+        { title: '不碰你的输入法', body: '不替换系统输入法，不改你原来的打字习惯。' },
       ],
     },
     install: {
       eyebrow: '安装',
-      title: '装上它,大概一分钟。',
-      subtitle: '三种装法,任选一种。代码全部开源,你能看见它做了什么、没做什么。',
+      title: '装上它，大概一分钟。',
+      subtitle: '三种装法，任选一种。代码全部开源，你能看见它做了什么、没做什么。',
       methods: [
         {
           tag: '推荐',
@@ -200,19 +200,19 @@ export const t: Record<Lang, Strings> = {
         {
           tag: '',
           title: '下载 DMG',
-          body: '从 GitHub Releases 下载,拖进「应用程序」,首次打开按提示授权。',
+          body: '从 GitHub Releases 下载，拖进「应用程序」，首次打开按提示授权。',
           cta: { label: '前往 Releases', href: 'https://github.com/giraphant/dousha/releases/latest' },
         },
         {
           tag: '',
           title: '自己构建',
-          body: 'macOS 14 及以上,克隆仓库后跑一行 make install。',
+          body: 'macOS 14 及以上，克隆仓库后跑一行 make install。',
           command: 'make install',
         },
       ],
       permsTitle: '关于权限',
       perms:
-        '首次使用会请求「麦克风」和「辅助功能」两项权限:前者用来听你说话,后者用来把转写好的文字粘贴进当前应用。',
+        '首次使用会请求「麦克风」和「辅助功能」两项权限：前者用来听你说话，后者用来把转写好的文字粘贴进当前应用。',
       copy: '复制',
       copied: '已复制',
     },
@@ -221,43 +221,43 @@ export const t: Record<Lang, Strings> = {
       title: '你可能想先问问。',
       items: [
         {
-          q: '用 Dousha 需要先装豆包吗?',
-          a: '不需要。Dousha 直接调用豆包的语音识别能力,你不用安装豆包 App,也不用装它的输入法。',
+          q: '用 Dousha 需要先装豆包吗？',
+          a: '不需要。Dousha 直接调用豆包的语音识别能力，你不用安装豆包 App，也不用装它的输入法。',
         },
         {
-          q: '它和豆包输入法有什么区别?',
-          a: '豆包输入法会替换你的系统输入法、带进自己的一套界面。Dousha 只是个菜单栏小工具,不碰你的输入法,只在你按住热键时帮你把语音转成文字。',
+          q: '它和豆包输入法有什么区别？',
+          a: '豆包输入法会替换你的系统输入法、带进自己的一套界面。Dousha 只是个菜单栏小工具，不碰你的输入法，只在你按住热键时帮你把语音转成文字。',
         },
         {
-          q: '支持哪些 Mac?',
-          a: 'macOS 14(Sonoma)及以上版本,通过 Homebrew、DMG 或源码安装都可以。',
+          q: '支持哪些 Mac？',
+          a: 'macOS 14（Sonoma）及以上版本，通过 Homebrew、DMG 或源码安装都可以。',
         },
         {
-          q: '要花钱吗?',
-          a: '完全免费。开源,采用 MIT 协议,代码在 GitHub 上公开。',
+          q: '要花钱吗？',
+          a: '完全免费。开源，采用 MIT 协议，代码在 GitHub 上公开。',
         },
         {
-          q: '我的录音会被怎么处理?',
-          a: '你的语音会发送到所选的识别引擎转写成文字。Dousha 是开源的,你可以在代码里确认它只做录音、转写、粘贴这三件事。',
+          q: '我的录音会被怎么处理？',
+          a: '你的语音会发送到所选的识别引擎转写成文字。Dousha 是开源的，你可以在代码里确认它只做录音、转写、粘贴这三件事。',
         },
         {
-          q: '怎么改触发键?',
-          a: '从菜单栏图标打开「设置」,就能把默认的右 Shift 换成别的键,或切换到「按一下开始、再按一下结束」的模式。',
+          q: '怎么改触发键？',
+          a: '从菜单栏图标打开「设置」，就能把默认的右 Shift 换成别的键，或切换到「按一下开始、再按一下结束」的模式。',
         },
         {
-          q: '可以识别英文吗?',
-          a: '可以。支持中文、英文等多种语言,在设置里切换。',
+          q: '可以识别英文吗？',
+          a: '可以。支持中文、英文等多种语言，在设置里切换。',
         },
       ],
     },
     footer: {
-      tagline: '豆包减去外壳,剩下那口馅。',
+      tagline: '豆包减去外壳，剩下那口馅。',
       nav: [
         { href: 'https://github.com/giraphant/dousha', label: 'GitHub 仓库' },
         { href: 'https://github.com/giraphant/dousha/releases/latest', label: '下载 Releases' },
         { href: 'https://github.com/giraphant/dousha/blob/main/README.md', label: '说明文档' },
       ],
-      credits: 'SpeechMore 与 DoubaoASR(作者 @gfreezy)的精神续作。',
+      credits: 'SpeechMore 与 DoubaoASR（作者 @gfreezy）的精神续作。',
       builtBy: '开源 · MIT 协议',
       backToTop: '回到顶部',
     },
