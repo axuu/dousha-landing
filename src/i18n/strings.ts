@@ -94,7 +94,6 @@ export interface Strings {
   footer: {
     tagline: string;
     nav: { href: string; label: string }[];
-    credits: string;
     builtBy: string;
     backToTop: string;
   };
@@ -130,7 +129,7 @@ export const t: Record<Lang, Strings> = {
       primaryCta: '用 Homebrew 安装',
       secondaryCta: '下载 DMG',
       brewLabel: '最省事的装法：',
-      chips: ['免费开源 · MIT', 'macOS 14+', '无需豆包输入法'],
+      chips: ['免费开源', 'macOS 14+', '无需豆包输入法'],
       iconAlt: '豆沙的笑脸豆子图标',
       demo: {
         hint: '按住说话',
@@ -234,7 +233,7 @@ export const t: Record<Lang, Strings> = {
         },
         {
           q: '要花钱吗？',
-          a: '完全免费。开源，采用 MIT 协议，代码在 GitHub 上公开。',
+          a: '完全免费。开源，代码在 GitHub 上公开。',
         },
         {
           q: '我的录音会被怎么处理？',
@@ -257,8 +256,7 @@ export const t: Record<Lang, Strings> = {
         { href: 'https://github.com/giraphant/dousha/releases/latest', label: '下载 Releases' },
         { href: 'https://github.com/giraphant/dousha/blob/main/README.md', label: '说明文档' },
       ],
-      credits: 'SpeechMore 与 DoubaoASR（作者 @gfreezy）的精神续作。',
-      builtBy: '开源 · MIT 协议',
+      builtBy: '开源',
       backToTop: '回到顶部',
     },
   },
@@ -292,7 +290,7 @@ export const t: Record<Lang, Strings> = {
       primaryCta: 'Install with Homebrew',
       secondaryCta: 'Download the DMG',
       brewLabel: 'The easy way:',
-      chips: ['Free & open source · MIT', 'macOS 14+', 'No Doubao IME'],
+      chips: ['Free & open source', 'macOS 14+', 'No Doubao IME'],
       iconAlt: "Dousha's grinning red-bean icon",
       demo: {
         hint: 'Hold to talk',
@@ -396,7 +394,7 @@ export const t: Record<Lang, Strings> = {
         },
         {
           q: 'How much does it cost?',
-          a: "Nothing. It's free and open source under the MIT license, with the code public on GitHub.",
+          a: "Nothing. It's free and open source, with the code public on GitHub.",
         },
         {
           q: 'What happens to my audio?',
@@ -419,8 +417,7 @@ export const t: Record<Lang, Strings> = {
         { href: 'https://github.com/giraphant/dousha/releases/latest', label: 'Download releases' },
         { href: 'https://github.com/giraphant/dousha/blob/main/README.md', label: 'Read the docs' },
       ],
-      credits: 'A spiritual fork of SpeechMore and DoubaoASR by @gfreezy.',
-      builtBy: 'Open source · MIT',
+      builtBy: 'Open source',
       backToTop: 'Back to top',
     },
   },

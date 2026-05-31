@@ -23,7 +23,6 @@ const year = 2026;
     </nav>
 
     <div class="footer__meta">
-      <p class="footer__credits">{fo.credits}</p>
       <p class="footer__legal">
         <span>© {year} Dousha · {fo.builtBy}</span>
         <a href="#top" class="footer__top">
@@ -93,12 +92,11 @@ const year = 2026;
     border-top: 1px solid oklch(0.965 0.014 80 / 0.14);
     font-size: 0.9rem;
   }
-  .footer__credits {
-    max-width: 46ch;
-  }
   .footer__legal {
+    flex: 1;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1.25rem;
     flex-wrap: wrap;
   }
