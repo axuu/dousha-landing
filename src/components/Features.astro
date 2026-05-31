@@ -1,0 +1,172 @@
+---
+import { t, type Lang } from '../i18n/strings';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t[lang];
+const f = s.features;
+const lead = f.items[0];
+const rest = f.items.slice(1);
+
+const restIcons = [
+  // 按住/切换
+  '<rect x="2.5" y="8" width="19" height="8" rx="4"/><circle cx="8" cy="12" r="2.4" fill="currentColor" stroke="none"/>',
+  // 多语言
+  '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-6-4-9s1.4-6.4 4-9Z"/>',
+  // 多引擎
+  '<rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9 2.5v3M15 2.5v3M9 18.5v3M15 18.5v3M2.5 9h3M2.5 15h3M18.5 9h3M18.5 15h3" stroke-linecap="round"/>',
+  // 菜单栏常驻
+  '<rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M2.5 9h19" /><circle cx="17" cy="6.7" r="0.6" fill="currentColor" stroke="none"/><circle cx="19" cy="6.7" r="0.6" fill="currentColor" stroke="none"/>',
+  // 不碰输入法
+  '<rect x="2.5" y="7" width="19" height="11" rx="2.5"/><path d="M6 10.5h.01M9.5 10.5h.01M13 10.5h.01M16.5 10.5h.01M7.5 14h9" stroke-linecap="round"/>',
+];
+---
+
+<section id="features" class="section features">
+  <div class="wrap">
+    <div class="features__head reveal">
+      <p class="eyebrow">{f.eyebrow}</p>
+      <h2>{f.title}</h2>
+    </div>
+
+    <!-- 主打特性:自定义热键 + 键帽插画 -->
+    <article class="lead reveal">
+      <div class="lead__copy">
+        <h3>{lead.title}</h3>
+        <p>{lead.body}</p>
+      </div>
+      <div class="lead__art" aria-hidden="true">
+        <span class="kc kc--active">⇧ {lang === 'zh' ? '右 Shift' : 'Right Shift'}</span>
+        <span class="kc">⌥</span>
+        <span class="kc">fn</span>
+        <span class="kc">⌘</span>
+        <span class="kc kc--more">+</span>
+      </div>
+    </article>
+
+    <!-- 其余特性:编辑式特性行 -->
+    <ul class="frows">
+      {rest.map((item, i) => (
+        <li class="frow reveal" data-delay={(i % 3) + 1}>
+          <span class="frow__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" set:html={restIcons[i]} />
+          </span>
+          <div>
+            <h3 class="frow__title">{item.title}</h3>
+            <p class="frow__body">{item.body}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .features {
+    background: var(--dough-100);
+  }
+  .features__head {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .features__head .eyebrow {
+    margin-bottom: 0.9rem;
+  }
+
+  .lead {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    background: linear-gradient(135deg, var(--dough-50), var(--dough-200));
+    border: 1px solid var(--dough-200);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .lead__copy h3 {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    margin-bottom: 0.6rem;
+  }
+  .lead__copy p {
+    color: var(--ink-70);
+    max-width: 36ch;
+    line-height: 1.65;
+  }
+  .lead__art {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: center;
+  }
+  .kc {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    height: 3rem;
+    padding-inline: 0.85rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink-70);
+    background: var(--dough-50);
+    border-radius: 0.7rem;
+    box-shadow:
+      0 2px 0 var(--dough-300),
+      inset 0 1px 0 oklch(1 0 0 / 0.8);
+  }
+  .kc--active {
+    color: var(--on-bean);
+    background: var(--bean-500);
+    box-shadow:
+      0 3px 0 var(--bean-700),
+      0 8px 18px oklch(0.55 0.17 30 / 0.3);
+  }
+  .kc--more {
+    color: var(--ink-50);
+    font-size: 1.3rem;
+  }
+
+  .frows {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: clamp(1.25rem, 2.5vw, 2rem) clamp(2rem, 4vw, 3.5rem);
+  }
+  .frow {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--dough-300);
+  }
+  .frow__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.8rem;
+    color: var(--bean-600);
+    background: var(--dough-50);
+    box-shadow: inset 0 0 0 1px var(--dough-200);
+  }
+  .frow__title {
+    font-size: 1.12rem;
+    margin-bottom: 0.3rem;
+  }
+  .frow__body {
+    color: var(--ink-70);
+    line-height: 1.6;
+    font-size: 0.98rem;
+  }
+
+  @media (max-width: 760px) {
+    .lead {
+      grid-template-columns: 1fr;
+    }
+    .lead__art {
+      justify-content: flex-start;
+    }
+  }
+</style>

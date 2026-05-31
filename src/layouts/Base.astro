@@ -1,0 +1,180 @@
+---
+import '../styles/global.css';
+import { t, type Lang, langPath, htmlLang } from '../i18n/strings';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t[lang];
+
+const site = Astro.site ?? new URL('https://dousha.app');
+const canonical = new URL(langPath[lang], site).href;
+const zhUrl = new URL(langPath.zh, site).href;
+const enUrl = new URL(langPath.en, site).href;
+const ogImage = new URL('/og.png', site).href;
+
+// JSON-LD: SoftwareApplication
+const appLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Dousha (豆沙)',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'macOS 14+',
+  description: s.meta.description,
+  url: canonical,
+  image: ogImage,
+  downloadUrl: 'https://github.com/giraphant/dousha/releases/latest',
+  softwareVersion: 'latest',
+  license: 'https://opensource.org/licenses/MIT',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Person',
+    name: 'giraphant',
+    url: 'https://github.com/giraphant',
+  },
+};
+
+// JSON-LD: FAQPage
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: s.faq.items.map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a },
+  })),
+};
+---
+
+<!doctype html>
+<html lang={htmlLang[lang]} dir={s.dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{s.meta.title}</title>
+    <meta name="description" content={s.meta.description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" type="image/png" href="/dousha-icon.png" />
+    <link rel="apple-touch-icon" href="/dousha-icon.png" />
+    <meta name="theme-color" content="#7d2b22" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="zh-CN" href={zhUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={zhUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dousha 豆沙" />
+    <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:title" content={s.meta.title} />
+    <meta property="og:description" content={s.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={s.meta.ogAlt} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={s.meta.title} />
+    <meta name="twitter:description" content={s.meta.description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={s.meta.ogAlt} />
+
+    <!-- 结构化数据:SoftwareApplication + FAQPage -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(appLd)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqLd)} />
+
+    <!-- 立即标记 JS 可用,让滚动揭示动效只在有 JS 时启用 -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{lang === 'zh' ? '跳到主要内容' : 'Skip to content'}</a>
+    <slot />
+
+    <script>
+      // 滚动揭示:内容默认可见,这里只为已渲染元素加入场动效。
+      // 关键:任何情况下都不会让内容停留在隐藏态——
+      // 不支持 IO、减少动效、页面不可见、或超时兜底,都会立即全部显示。
+      const items = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+      const revealAll = () => items.forEach((el) => el.classList.add('is-in'));
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReduced || !('IntersectionObserver' in window) || document.visibilityState !== 'visible') {
+        revealAll();
+      } else {
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-in');
+                obs.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
+        );
+        items.forEach((el) => io.observe(el));
+        // 安全网:无论是否滚动,2.2s 后强制显示所有内容,
+        // 杜绝无头渲染 / 后台标签页里区块空白发布。
+        window.setTimeout(revealAll, 2200);
+      }
+
+      // 复制命令到剪贴板
+      document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-copy') ?? '';
+          const done = btn.getAttribute('data-copied') ?? 'Copied';
+          const idle = btn.querySelector<HTMLElement>('[data-copy-label]');
+          const prev = idle?.textContent ?? '';
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+          }
+          btn.classList.add('is-copied');
+          if (idle) idle.textContent = done;
+          window.setTimeout(() => {
+            btn.classList.remove('is-copied');
+            if (idle) idle.textContent = prev;
+          }, 1800);
+        });
+      });
+    </script>
+
+    <style>
+      .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: -3rem;
+        z-index: var(--z-toast);
+        padding: 0.6rem 1rem;
+        background: var(--bean-600);
+        color: var(--on-bean);
+        border-radius: var(--radius-sm);
+        transition: top 0.2s ease;
+      }
+      .skip-link:focus {
+        top: 1rem;
+      }
+    </style>
+  </body>
+</html>

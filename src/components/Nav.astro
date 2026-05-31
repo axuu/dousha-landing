@@ -1,0 +1,199 @@
+---
+import { t, type Lang, langPath } from '../i18n/strings';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t[lang];
+const otherLang: Lang = lang === 'zh' ? 'en' : 'zh';
+---
+
+<header class="nav" data-nav>
+  <div class="nav__inner wrap">
+    <a class="brand" href={langPath[lang]} aria-label="Dousha 豆沙">
+      <img src="/dousha-icon.png" width="36" height="36" alt="" class="brand__mark" />
+      <span class="brand__name">豆沙<span class="brand__latin">Dousha</span></span>
+    </a>
+
+    <nav class="nav__links" aria-label={lang === 'zh' ? '主导航' : 'Primary'}>
+      {s.nav.links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="nav__actions">
+      <a
+        class="lang-toggle"
+        href={langPath[otherLang]}
+        aria-label={s.nav.toggleLabel}
+        title={s.nav.toggleLabel}
+      >
+        {s.nav.toggleTo}
+      </a>
+      <a
+        class="nav__gh"
+        href="https://github.com/giraphant/dousha"
+        target="_blank"
+        rel="noopener"
+        aria-label="GitHub"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"
+          ></path>
+        </svg>
+      </a>
+      <a class="btn nav__cta" href="#install">{s.nav.cta}</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .nav[data-scrolled='true'] {
+    background: oklch(0.962 0.018 78 / 0.85);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom-color: var(--dough-300);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 4.5rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-right: auto;
+    font-family: var(--font-display);
+    font-weight: 720;
+  }
+  .brand__mark {
+    border-radius: 9px;
+    box-shadow: var(--shadow-sm);
+  }
+  .brand__name {
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    color: var(--ink);
+  }
+  .brand__latin {
+    font-size: 0.95rem;
+    color: var(--bean-500);
+    letter-spacing: -0.02em;
+  }
+  .nav__links {
+    display: flex;
+    gap: clamp(1rem, 2.4vw, 2rem);
+    font-weight: 500;
+    font-size: 0.98rem;
+  }
+  .nav__links a {
+    color: var(--ink-70);
+    padding: 0.4rem 0;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background: var(--bean-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.28s var(--ease-out-quart);
+  }
+  .nav__links a:hover {
+    color: var(--ink);
+  }
+  .nav__links a:hover::after {
+    transform: scaleX(1);
+  }
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding-inline: 0.6rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-70);
+    box-shadow: inset 0 0 0 1.5px var(--dough-300);
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .lang-toggle:hover {
+    color: var(--ink);
+    background: var(--dough-200);
+  }
+  .nav__gh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-pill);
+    color: var(--ink-70);
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .nav__gh:hover {
+    color: var(--ink);
+    background: var(--dough-200);
+  }
+  .nav__cta {
+    min-height: 2.5rem;
+    padding: 0.5rem 1.15rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 800px) {
+    .nav__links {
+      display: none;
+    }
+  }
+  @media (max-width: 420px) {
+    .nav__gh {
+      display: none;
+    }
+    .brand__latin {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // 滚动后给 nav 加底色(纯 class 切换,无布局动画)
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  if (nav) {
+    const onScroll = () => {
+      nav.dataset.scrolled = String(window.scrollY > 12);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

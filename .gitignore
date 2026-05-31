@@ -1,0 +1,19 @@
+# build output
+dist/
+# astro
+.astro/
+# deps
+node_modules/
+# env
+.env
+.env.production
+# logs
+npm-debug.log*
+# os
+.DS_Store
+
+# agent / skill tooling (not part of the landing page)
+.agents/
+.claude/
+.cursor/
+.gemini/

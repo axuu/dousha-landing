@@ -1,0 +1,106 @@
+---
+interface Props {
+  command: string;
+  copyLabel: string;
+  copiedLabel: string;
+  tone?: 'cream' | 'bean';
+}
+const { command, copyLabel, copiedLabel, tone = 'cream' } = Astro.props;
+---
+
+<div class={`cmd cmd--${tone}`}>
+  <span class="cmd__prompt" aria-hidden="true">$</span>
+  <code class="cmd__text">{command}</code>
+  <button
+    class="cmd__copy"
+    type="button"
+    data-copy={command}
+    data-copied={copiedLabel}
+    aria-label={`${copyLabel}: ${command}`}
+  >
+    <svg class="cmd__icon cmd__icon--copy" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="2"></rect>
+      <path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="cmd__icon cmd__icon--check" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <span data-copy-label>{copyLabel}</span>
+  </button>
+</div>
+
+<style>
+  .cmd {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.55rem 0.55rem 1rem;
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .cmd--cream {
+    background: var(--ink);
+    color: var(--dough-100);
+  }
+  .cmd--bean {
+    background: oklch(0.2 0.06 27);
+    color: var(--on-bean);
+    box-shadow: inset 0 0 0 1px oklch(0.965 0.014 80 / 0.12);
+  }
+  .cmd__prompt {
+    color: var(--bean-400);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cmd__text {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    letter-spacing: -0.01em;
+  }
+  .cmd__text::-webkit-scrollbar {
+    display: none;
+  }
+  .cmd__copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    padding: 0.5rem 0.85rem;
+    border-radius: calc(var(--radius) - 0.35rem);
+    background: oklch(0.965 0.014 80 / 0.12);
+    color: inherit;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+  }
+  .cmd__copy:hover {
+    background: oklch(0.965 0.014 80 / 0.22);
+  }
+  .cmd__icon {
+    flex-shrink: 0;
+  }
+  .cmd__icon--check {
+    display: none;
+    color: var(--bean-300);
+  }
+  .cmd__copy.is-copied .cmd__icon--copy {
+    display: none;
+  }
+  .cmd__copy.is-copied .cmd__icon--check {
+    display: block;
+  }
+
+  @media (max-width: 420px) {
+    .cmd__copy span[data-copy-label] {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,24 @@
+{
+  "name": "dousha-landing",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page for Dousha (豆沙) — a tiny macOS menu-bar voice dictation app.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "og": "node scripts/make-og.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.7.0",
+    "@astrojs/sitemap": "^3.3.0",
+    "@fontsource-variable/bricolage-grotesque": "^5.2.0",
+    "@fontsource-variable/hanken-grotesk": "^5.2.0",
+    "sharp": "^0.34.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.1.0"
+  }
+}

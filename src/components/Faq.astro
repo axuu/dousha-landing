@@ -1,0 +1,122 @@
+---
+import { t, type Lang } from '../i18n/strings';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t[lang];
+const faq = s.faq;
+---
+
+<section id="faq" class="section faq">
+  <div class="wrap faq__wrap">
+    <div class="faq__head reveal">
+      <p class="eyebrow">{faq.eyebrow}</p>
+      <h2>{faq.title}</h2>
+    </div>
+
+    <div class="faq__list">
+      {faq.items.map((item, i) => (
+        <details class="qa reveal" data-delay={(i % 2) + 1} name="dousha-faq">
+          <summary class="qa__q">
+            <span>{item.q}</span>
+            <span class="qa__mark" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </summary>
+          <div class="qa__a">
+            <p>{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--dough-50);
+  }
+  .faq__wrap {
+    max-width: 52rem;
+  }
+  .faq__head {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .faq__head .eyebrow {
+    margin-bottom: 0.9rem;
+  }
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+  }
+  .qa {
+    border-top: 1px solid var(--dough-300);
+  }
+  .qa:last-child {
+    border-bottom: 1px solid var(--dough-300);
+  }
+  .qa__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.3rem 0.25rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 640;
+    font-size: clamp(1.05rem, 2vw, 1.22rem);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    transition: color 0.2s ease;
+  }
+  .qa__q::-webkit-details-marker {
+    display: none;
+  }
+  .qa__q:hover {
+    color: var(--bean-600);
+  }
+  .qa__mark {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    color: var(--bean-600);
+    background: var(--dough-200);
+    transition: transform 0.3s var(--ease-out-quart), background-color 0.2s ease;
+  }
+  .qa[open] .qa__mark {
+    transform: rotate(180deg);
+    background: var(--bean-500);
+    color: var(--on-bean);
+  }
+  .qa__a {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.32s var(--ease-out-quart);
+  }
+  .qa[open] .qa__a {
+    grid-template-rows: 1fr;
+  }
+  .qa__a > p {
+    overflow: hidden;
+    color: var(--ink-70);
+    line-height: 1.7;
+    max-width: 64ch;
+  }
+  .qa[open] .qa__a > p {
+    padding-bottom: 1.3rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .qa__mark,
+    .qa__a {
+      transition: none;
+    }
+  }
+</style>

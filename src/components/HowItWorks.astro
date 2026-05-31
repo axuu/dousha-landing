@@ -1,0 +1,145 @@
+---
+import { t, type Lang } from '../i18n/strings';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t[lang];
+const how = s.how;
+
+const icons = [
+  // 按住:键帽 + Shift 箭头(默认右 Shift)
+  '<rect x="4" y="4" width="16" height="16" rx="4.5"/><path d="M12 8l3.2 3.6h-2.1V16h-2.2v-4.4H8.8L12 8Z" fill="currentColor" stroke="none"/>',
+  // 说话:麦克风
+  '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" stroke-linecap="round"/>',
+  // 松手:文字落入光标
+  '<path d="M5 7h9M5 12h7M5 17h5" stroke-linecap="round"/><path d="M17 9v8M14.5 9.5h5M14.5 16.5h5" stroke-linecap="round"/>',
+];
+---
+
+<section id="how" class="section how">
+  <div class="wrap">
+    <div class="how__head reveal">
+      <p class="eyebrow">{how.eyebrow}</p>
+      <h2>{how.title}</h2>
+    </div>
+
+    <ol class="how__steps">
+      {how.steps.map((step, i) => (
+        <li class="step reveal" data-delay={i + 1}>
+          <div class="step__top">
+            <span class="step__num">{step.k}</span>
+            <span class="step__icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" set:html={icons[i]} />
+            </span>
+          </div>
+          <h3 class="step__title">{step.title}</h3>
+          <p class="step__body">{step.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .how {
+    background: var(--dough-50);
+  }
+  .how__head {
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .how__head .eyebrow {
+    margin-bottom: 0.9rem;
+  }
+  .how__steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    position: relative;
+    counter-reset: step;
+  }
+  /* 连接线:仅桌面端,虚线串起三步 */
+  .how__steps::before {
+    content: '';
+    position: absolute;
+    top: 1.65rem;
+    left: 14%;
+    right: 14%;
+    height: 2px;
+    background-image: linear-gradient(to right, var(--dough-300) 55%, transparent 55%);
+    background-size: 14px 2px;
+    z-index: 0;
+  }
+  .step {
+    position: relative;
+    z-index: 1;
+  }
+  .step__top {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1.1rem;
+  }
+  .step__num {
+    display: inline-grid;
+    place-items: center;
+    width: 3.3rem;
+    height: 3.3rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--bean-500);
+    color: var(--on-bean);
+    font-family: var(--font-display);
+    font-weight: 720;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    box-shadow: 0 6px 16px oklch(0.55 0.17 30 / 0.3);
+  }
+  .step__icon {
+    color: var(--bean-600);
+    background: var(--dough-200);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+  .step__title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .step__body {
+    color: var(--ink-70);
+    max-width: 30ch;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 720px) {
+    .how__steps {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    .how__steps::before {
+      display: none;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas: 'top title' 'top body';
+      column-gap: 1.1rem;
+      align-items: start;
+    }
+    .step__top {
+      grid-area: top;
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+    .step__title {
+      grid-area: title;
+    }
+    .step__body {
+      grid-area: body;
+      max-width: none;
+    }
+  }
+</style>

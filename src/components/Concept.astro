@@ -1,0 +1,182 @@
+---
+import { t, type Lang } from '../i18n/strings';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t[lang];
+const c = s.concept;
+---
+
+<section class="section concept">
+  <div class="wrap">
+    <div class="concept__head reveal">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h2>{c.title}</h2>
+      <p class="concept__body measure">{c.body}</p>
+    </div>
+
+    <div class="equation reveal" role="img" aria-label={`${c.bun} ${c.minus} = ${c.filling}`}>
+      <!-- 豆包:一整套(带壳的包子) -->
+      <figure class="eq__item" data-delay="1">
+        <div class="eq__art">
+          <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+            <ellipse cx="60" cy="92" rx="34" ry="7" fill="oklch(0.30 0.10 27 / 0.10)" />
+            <path d="M60 26c24 0 38 16 38 36 0 18-16 30-38 30S22 80 22 62c0-20 14-36 38-36Z" fill="var(--dough-50)" stroke="var(--dough-300)" stroke-width="2" />
+            <path d="M60 26c-7 8-7 16 0 24 7-8 7-16 0-24Z" fill="var(--dough-200)" />
+            <path d="M44 30c-2 9 0 17 6 23M76 30c2 9 0 17-6 23" stroke="var(--dough-300)" stroke-width="2" fill="none" stroke-linecap="round" />
+            <path d="M48 78c5 6 19 6 24 0" stroke="var(--bean-400)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5" />
+          </svg>
+        </div>
+        <figcaption>
+          <strong>{c.bun}</strong>
+          <span>{c.bunSub}</span>
+        </figcaption>
+      </figure>
+
+      <span class="eq__op" aria-hidden="true">−</span>
+
+      <!-- 外壳:空的皮 -->
+      <figure class="eq__item" data-delay="2">
+        <div class="eq__art">
+          <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+            <ellipse cx="60" cy="92" rx="30" ry="6" fill="oklch(0.30 0.10 27 / 0.08)" />
+            <path d="M88 44c8 14 4 34-12 42-18 9-40 0-46-18 12 10 30 12 42 2 11-9 14-20 16-26Z" fill="var(--dough-200)" stroke="var(--dough-300)" stroke-width="2" stroke-linejoin="round" />
+            <path d="M84 40c-3 7-9 13-17 16" stroke="var(--dough-300)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7" />
+          </svg>
+        </div>
+        <figcaption>
+          <strong class="eq__muted">{c.minus}</strong>
+        </figcaption>
+      </figure>
+
+      <span class="eq__op" aria-hidden="true">=</span>
+
+      <!-- 豆沙:笑脸红豆馅 -->
+      <figure class="eq__item eq__item--star" data-delay="3">
+        <div class="eq__art">
+          <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+            <ellipse cx="62" cy="94" rx="32" ry="7" fill="oklch(0.30 0.10 27 / 0.16)" />
+            <path d="M62 24c22 0 36 16 36 36 0 20-16 32-36 32S26 80 26 60c0-20 14-36 36-36Z" fill="var(--bean-500)" />
+            <path d="M62 24c20 2 33 17 34 35-6-14-19-24-34-26-1-4-1-7 0-9Z" fill="var(--bean-400)" opacity="0.6" />
+            <circle cx="40" cy="58" r="9" fill="var(--bean-600)" />
+            <ellipse cx="51" cy="56" rx="4.4" ry="6.2" fill="var(--dough-50)" />
+            <ellipse cx="74" cy="56" rx="4.4" ry="6.2" fill="var(--dough-50)" />
+            <path d="M56 70c4 4 10 4 14 0" stroke="var(--dough-50)" stroke-width="3.4" fill="none" stroke-linecap="round" />
+          </svg>
+        </div>
+        <figcaption>
+          <strong>{c.filling}</strong>
+          <span>{c.fillingSub}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .concept {
+    background: var(--dough-100);
+  }
+  .concept__head {
+    max-width: 44rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .concept__head .eyebrow {
+    margin-bottom: 0.9rem;
+  }
+  .concept__body {
+    margin-top: 1.25rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+    color: var(--ink-70);
+    line-height: 1.7;
+  }
+
+  .equation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 2.5vw, 2rem);
+    flex-wrap: wrap;
+    background: var(--dough-50);
+    border: 1px solid var(--dough-200);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 3rem);
+    box-shadow: var(--shadow-sm);
+  }
+  .eq__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0;
+    text-align: center;
+  }
+  .eq__art {
+    display: grid;
+    place-items: center;
+    width: clamp(5.5rem, 13vw, 7.5rem);
+    height: clamp(5.5rem, 13vw, 7.5rem);
+  }
+  .eq__art svg {
+    width: 100%;
+    height: 100%;
+  }
+  .eq__item--star .eq__art {
+    animation: pop-bob 4s var(--ease-out-quart) infinite;
+  }
+  .eq__item figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .eq__item strong {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 720;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .eq__item--star strong {
+    color: var(--bean-600);
+  }
+  .eq__muted {
+    color: var(--ink-50) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+  }
+  .eq__item span {
+    font-size: 0.88rem;
+    color: var(--ink-50);
+  }
+  .eq__op {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 600;
+    color: var(--bean-400);
+    line-height: 1;
+    align-self: flex-start;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  @keyframes pop-bob {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-9px) rotate(2deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .eq__item--star .eq__art {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .equation {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .eq__op {
+      align-self: center;
+      margin: 0;
+    }
+  }
+</style>

@@ -1,0 +1,398 @@
+---
+import { t, type Lang } from '../i18n/strings';
+import CopyCommand from './CopyCommand.astro';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t[lang];
+const h = s.hero;
+---
+
+<section class="hero bleed-bean">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__inner wrap">
+    <div class="hero__copy">
+      <p class="eyebrow hero__eyebrow hero-rise" style="--i:0">
+        <span class="eyebrow__dot" aria-hidden="true"></span>
+        {h.eyebrow}
+      </p>
+      <h1 class="hero__title">
+        {h.titleLines.map((line, i) => (
+          <span class="hero__line hero-rise" style={`--i:${i + 1}`}>{line}</span>
+        ))}
+      </h1>
+      <p class="hero__sub hero-rise" style="--i:3">{h.subtitle}</p>
+
+      <div class="hero__cta hero-rise" style="--i:4">
+        <a class="btn" href="#install">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M5 19h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          {h.primaryCta}
+        </a>
+        <a class="btn btn--ghost" href="https://github.com/giraphant/dousha/releases/latest" target="_blank" rel="noopener">
+          {h.secondaryCta}
+        </a>
+      </div>
+
+      <div class="hero__brew hero-rise" style="--i:5">
+        <span class="hero__brew-label">{h.brewLabel}</span>
+        <CopyCommand
+          command="brew install --cask giraphant/tap/dousha"
+          copyLabel={s.install.copy}
+          copiedLabel={s.install.copied}
+          tone="bean"
+        />
+      </div>
+
+      <ul class="hero__chips hero-rise" style="--i:6">
+        {h.chips.map((c) => (
+          <li class="chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            {c}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="hero__stage" aria-hidden="false">
+      <img
+        class="hero__bean"
+        src="/dousha-icon.png"
+        width="240"
+        height="240"
+        alt={h.iconAlt}
+        fetchpriority="high"
+      />
+
+      <figure class="demo">
+        <figcaption class="demo__bar">
+          <span class="demo__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="demo__status">
+            <span class="wave" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </span>
+            {h.demo.listening}
+          </span>
+        </figcaption>
+        <div class="demo__body">
+          <p class="demo__text">{h.demo.transcript}<span class="demo__caret" aria-hidden="true"></span></p>
+        </div>
+        <div class="demo__foot">
+          <kbd class="keycap"><span class="keycap__face">⇧ {h.demo.keycap}</span></kbd>
+          <span class="demo__hint">{h.demo.hint}</span>
+        </div>
+      </figure>
+      <p class="demo__caption">{h.demo.caption}</p>
+    </div>
+  </div>
+
+  <div class="hero__dough" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" width="100%" height="100%">
+      <path d="M0,80 L0,40 C240,4 480,76 720,52 C960,28 1200,4 1440,44 L1440,80 Z" fill="var(--dough-100)"></path>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(3rem, 7vw, 5.5rem);
+    padding-bottom: clamp(5rem, 9vw, 8rem);
+    background: radial-gradient(120% 120% at 75% 0%, var(--bean-600) 0%, var(--bean-700) 42%, var(--bean-800) 100%);
+    overflow: clip;
+  }
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(40% 50% at 78% 30%, oklch(0.7 0.14 35 / 0.5), transparent 70%);
+    pointer-events: none;
+  }
+  .hero__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .hero__copy {
+    max-width: 36rem;
+    min-width: 0;
+  }
+  .hero__eyebrow {
+    margin-bottom: 1.25rem;
+  }
+  .eyebrow__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--blush);
+    box-shadow: 0 0 0 4px oklch(0.85 0.06 22 / 0.25);
+  }
+  .hero__title {
+    font-size: clamp(2.1rem, 5.6vw, 3.7rem);
+    line-height: 1.06;
+    margin-bottom: 1.4rem;
+  }
+  .hero__line {
+    display: block;
+  }
+  /* 中文设计行较短:整行不换行,保证「按住、说话、松手,」成行不被挤断 */
+  :global(html:lang(zh)) .hero__line {
+    white-space: nowrap;
+  }
+  .hero__line:last-child {
+    color: var(--blush);
+  }
+  .hero__sub {
+    font-size: clamp(1.05rem, 1.7vw, 1.2rem);
+    line-height: 1.65;
+    color: var(--on-bean-70);
+    max-width: 34ch;
+    margin-bottom: 2rem;
+  }
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero__brew {
+    max-width: 30rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero__brew-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--on-bean-70);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  .hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--on-bean-70);
+  }
+  .chip svg {
+    color: var(--blush);
+  }
+
+  /* ---- 右侧演示舞台 ---- */
+  .hero__stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    width: 100%;
+    max-width: 26rem;
+  }
+  .hero__bean {
+    width: clamp(8rem, 16vw, 12.5rem);
+    height: auto;
+    filter: drop-shadow(0 24px 40px oklch(0.2 0.08 27 / 0.55));
+    animation: bob 5.5s var(--ease-out-quart) infinite;
+    margin-bottom: -2.5rem;
+    z-index: 1;
+  }
+  .demo {
+    width: 100%;
+    background: var(--dough-100);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    color: var(--ink);
+    margin: 0;
+  }
+  .demo__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    background: var(--dough-200);
+    border-bottom: 1px solid var(--dough-300);
+  }
+  .demo__lights {
+    display: inline-flex;
+    gap: 0.4rem;
+  }
+  .demo__lights i {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--dough-300);
+  }
+  .demo__lights i:first-child {
+    background: var(--bean-400);
+  }
+  .demo__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--bean-600);
+  }
+  .wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2.5px;
+    height: 16px;
+  }
+  .wave span {
+    width: 3px;
+    height: 30%;
+    border-radius: 2px;
+    background: var(--bean-500);
+    animation: wave 1s ease-in-out infinite;
+  }
+  .wave span:nth-child(1) { animation-delay: 0s; }
+  .wave span:nth-child(2) { animation-delay: 0.12s; }
+  .wave span:nth-child(3) { animation-delay: 0.24s; }
+  .wave span:nth-child(4) { animation-delay: 0.36s; }
+  .wave span:nth-child(5) { animation-delay: 0.18s; }
+  .wave span:nth-child(6) { animation-delay: 0.3s; }
+  .wave span:nth-child(7) { animation-delay: 0.06s; }
+  .demo__body {
+    padding: 1.25rem 1.1rem 1.1rem;
+    min-height: 5.5rem;
+  }
+  .demo__text {
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .demo__caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    background: var(--bean-500);
+    animation: blink 1.1s step-end infinite;
+  }
+  .demo__foot {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    border-top: 1px solid var(--dough-300);
+    background: var(--dough-50);
+  }
+  .demo__hint {
+    font-size: 0.82rem;
+    color: var(--ink-50);
+    font-weight: 500;
+  }
+  .keycap {
+    --kc-h: 0.22rem;
+    display: inline-flex;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: var(--dough-300);
+    border-radius: 0.55rem;
+    padding-bottom: var(--kc-h);
+    animation: press 3s var(--ease-out-quart) infinite;
+  }
+  .keycap__face {
+    display: inline-block;
+    padding: 0.4rem 0.7rem;
+    background: var(--dough-50);
+    border-radius: 0.5rem;
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.7);
+  }
+  .demo__caption {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+    color: var(--on-bean-70);
+    text-align: center;
+  }
+
+  .hero__dough {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: clamp(40px, 5vw, 80px);
+    line-height: 0;
+  }
+
+  /* ---- 动效 ---- */
+  @keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+    50% { transform: translateY(-14px) rotate(1.5deg); }
+  }
+  @keyframes wave {
+    0%, 100% { height: 22%; opacity: 0.6; }
+    50% { height: 100%; opacity: 1; }
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+  }
+  @keyframes press {
+    0%, 60%, 100% { transform: translateY(0); padding-bottom: var(--kc-h); }
+    70%, 85% { transform: translateY(2px); padding-bottom: 0; }
+  }
+
+  .hero-rise {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero-rise {
+      opacity: 0;
+      animation: rise 0.8s var(--ease-out-expo) forwards;
+      animation-delay: calc(var(--i) * 0.08s);
+    }
+    :global(.js) .hero__stage {
+      opacity: 0;
+      animation: rise 0.9s var(--ease-out-expo) 0.25s forwards;
+    }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__bean,
+    .wave span,
+    .demo__caret,
+    .keycap {
+      animation: none !important;
+    }
+    .wave span { height: 70%; }
+  }
+
+  /* ---- 响应式 ---- */
+  @media (max-width: 880px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .hero__copy {
+      max-width: none;
+    }
+    .hero__sub {
+      max-width: 46ch;
+    }
+    .hero__stage {
+      order: 2;
+      max-width: 24rem;
+    }
+  }
+</style>
