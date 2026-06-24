@@ -19,9 +19,18 @@ npm run preview    # 本地预览构建产物
 
 ## 部署
 
-`dist/` 是纯静态文件,可托管到任意平台:Vercel、Netlify、Cloudflare Pages、GitHub Pages 等。
+`dist/` 是纯静态文件，可托管到任意平台：Vercel、Netlify、Cloudflare Pages、GitHub Pages 等。
 
-**部署前请改一处:** 把 `astro.config.mjs` 里的 `SITE` 改成你的正式域名 —— 它用于 canonical、OpenGraph、hreflang 和 sitemap。改完后 `npm run build` 重新生成。
+**Coolify 推荐使用 Dockerfile：**
+
+1. Build Pack 选择 **Dockerfile**。
+2. Exposed Port 填 `80`。
+3. Health Check Path 可填 `/health`。
+4. 绑定正式域名，并确认 `astro.config.mjs` 里的 `SITE` 就是该域名。
+
+Docker 镜像会先用 Node 构建 Astro，再用 nginx 服务 `dist/`，线上容器不需要 Node 运行时。
+
+**部署前请改一处：** 把 `astro.config.mjs` 里的 `SITE` 改成你的正式域名 —— 它用于 canonical、OpenGraph、hreflang 和 sitemap。改完后 `npm run build` 重新生成。
 
 ## 结构
 
